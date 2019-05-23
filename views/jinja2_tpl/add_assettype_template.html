@@ -1,0 +1,23 @@
+{% extends "base.html" %}        
+    {% block content %}
+    <a href="/">BACK</a>
+      <div style="padding: 100px 100px 10px;">
+         <form class="bs-example bs-example-form" role="form" action="/assettype" method="post">
+             <div class="input-group">
+                 <span class="input-group-addon">assetname</span>
+                 <input type="text" name="assetname" class="form-control" placeholder="assetname">
+             </div>
+             <br>
+             <div class="input-group">
+                 <span class="input-group-addon">detailtype</span>
+                 <input type="text" name="detailtype" class="form-control">
+             </div>
+             <br>
+             <div class="input-group">
+                  <span class="input-group-btn">
+                      <button class="btn btn-default" type="submit">Submit</button>
+                  </span>
+              </div>
+         </form>
+      </div>
+    {% endblock %}

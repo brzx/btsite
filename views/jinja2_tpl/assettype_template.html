@@ -1,0 +1,43 @@
+{% extends "base.html" %}        
+    {% block content %}
+      <a href="/addassettype">Add an AssetType</a>
+      <h1>AssetType List</h1>
+         <table class="table table-bordered">
+            <caption>AssetType</caption>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>assetname</th>
+                <th>detailtype</th>
+                <th>create_dt</th>
+                <th>update_dt</th>
+                <th>delete</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for at in name %}
+                    <tr>
+                        <td>{{at.id}}</td>
+                        <td>{{at.assetname}}</td>
+                        <td>{{at.detailtype}}</td>
+                        <td>{{at.create_dt}}</td>
+                        <td>{{at.update_dt}}</td>
+                        <td><button class="btn btn-default" type="button" value="{{at.id}}" onclick="delfunc(value)">Delete</button></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+          </table>
+      <script>
+            function delfunc(value) {
+                    $.post("/assettype/delete",{
+                        id: value
+                    },
+                    function(data,status){
+                        if (data.data == "success") {
+                            alert("delete successful");
+                            window.location.reload();
+                        };
+                    });
+            };
+      </script>
+    {% endblock %}
