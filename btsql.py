@@ -1,5 +1,5 @@
 from bottle import (
-    Bottle, HTTPError, run, request, response, static_file, #view, 
+    Bottle, HTTPError, request, response, static_file, #view, 
     redirect, 
 )
 from bottle import jinja2_view
@@ -20,20 +20,15 @@ app.install(plugin)
 def server_static(filename):
     return static_file(filename, root='./static')
 
-@app.get('/<name>')
-def show(name, db):
-    entity = db.query(Entity).filter_by(name=name).first()
-    if entity:
-        return {'id': entity.id, 'name': entity.name}
-    return HTTPError(404, 'Entity not found.')
-@app.put('/<name>')
-def put_name(name, db):
-    entity = Entity(name)
-    db.add(entity)
+@app.route('/')
+@view('index')
+def index():
+    pass
 
+# module assettype start
 @app.route('/addassettype')
 @view('add_assettype_template')
-def index():
+def add_assettype():
     pass #
 
 @app.route('/assettype', method='POST')
@@ -45,16 +40,14 @@ def post_assettype(db):
         redirect('/assettype')
     at = AssetType(assetname=assetname, detailtype=detailtype)
     db.add(at)
-    redirect("/")
+    redirect("/assettype")
 
-@app.route('/')
+@app.route('/assettype')
 @view('assettype_template')
 def get_assettype(db):
     response.content_type = 'text/html; charset=utf8'
-    #pdb.set_trace()
     #at = db.query(AssetType).filter_by(id=3).first()
     ats = db.query(AssetType).all()
-    #print(ats)
     return dict(name=ats)
 
 @app.route('/assettype/delete', method='POST')
@@ -71,6 +64,27 @@ def del_assettype(db):
             print(err)
         else:
             return {'data':'success'}
+# module assettype end
 
-if __name__ == '__main__':
-    run(app, host='localhost', port=5000, debug=True, reloader=True, server='waitress')
+# module asset start
+@app.route('/addasset')
+@view('add_asset_template')
+def add_asset(db):
+    ats = db.query(AssetType).all()
+    return dict(name=ats)
+
+@app.route('/asset', method='POST')
+def post_asset(db):
+    assettypename = request.forms.getunicode('assettypename')
+    asiden = request.forms.getunicode('asiden')
+    asorgan = request.forms.getunicode('asorgan')
+    if assettypename == '' or asiden == '' or asorgan == '':
+        redirect('/asset')
+    #at = AssetType(assetname=assetname, detailtype=detailtype)
+    #db.add(at)
+    redirect("/asset")
+
+@app.route('/asset')
+def get_asset(db):
+    pass
+# module asset end
