@@ -1,0 +1,56 @@
+{% extends "base.html" %}        
+    {% block content %}
+      <div style="padding: 100px 100px 10px;">
+         <form class="bs-example bs-example-form" role="form" action="/asset" method="post">
+            <div class="input-group">
+                    <span class="input-group-addon">assettypename</span>
+                    <select name="assettypename">
+                       {% for at in name %}
+                           <option value="{{at.id}}">{{at.assetname}}</option>
+                       {% endfor %}
+                    </select>
+            </div>
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon">asiden</span>
+                <input type="text" name="asiden" class="form-control">
+            </div>
+            <br>
+                <div class="input-group">
+                    <span class="input-group-addon">asorgan</span>
+                    <input type="text" name="asorgan" class="form-control">
+                </div>
+            <br>
+                <div class="input-group">
+                        <span class="input-group-addon">bill_dt</span>
+                        <input type="text" name="bill_dt" class="form-control">
+                </div>
+            <br>
+                <div class="input-group">
+                        <span class="input-group-addon">repayment_dt</span>
+                        <input type="text" name="repayment_dt" class="form-control">
+                </div>
+            <br>
+                <div class="input-group">
+                        <span class="input-group-addon">credit_limit</span>
+                        <input type="text" name="credit_limit" class="form-control">
+                </div>
+            <br>
+                <div class="input-group">
+                        <span class="input-group-addon">year_rate</span>
+                        <input type="text" name="year_rate" class="form-control">
+                </div>
+            <br>
+                <div class="input-group">
+                        <span class="input-group-addon">comment</span>
+                        <input type="text" name="comment" class="form-control">
+                </div>
+            <br>
+             <div class="input-group">
+                  <span class="input-group-btn">
+                      <button class="btn btn-default" type="submit">Submit</button>
+                  </span>
+              </div>
+         </form>
+      </div>
+    {% endblock %}
