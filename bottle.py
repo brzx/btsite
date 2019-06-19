@@ -1126,6 +1126,7 @@ class Bottle(object):
 
     def __call__(self, environ, start_response):
         """ Each instance of :class:'Bottle' is a WSGI application. """
+        #pdb.set_trace()
         return self.wsgi(environ, start_response)
 
     def __enter__(self):
@@ -3603,7 +3604,7 @@ def load(target, **namespace):
         expression. Keyword arguments passed to this function are available as
         local variables. Example: ``import_string('re:compile(x)', x='[a-z]')``
     """
-    pdb.set_trace()
+    #pdb.set_trace()
     module, target = target.split(":", 1) if ':' in target else (target, None)
     if module not in sys.modules: __import__(module)
     if not target: return sys.modules[module]

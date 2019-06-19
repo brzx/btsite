@@ -4,7 +4,7 @@
          <form class="bs-example bs-example-form" role="form" action="/asset" method="post">
             <div class="input-group">
                     <span class="input-group-addon">assettypename</span>
-                    <select name="assettypename">
+                    <select name="assettypeid">
                        {% for at in name %}
                            <option value="{{at.id}}">{{at.assetname}}</option>
                        {% endfor %}

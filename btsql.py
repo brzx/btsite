@@ -5,7 +5,7 @@ from bottle import (
 from bottle import jinja2_view
 from bottle.ext import sqlalchemy
 from sqlalchemy import create_engine
-from model import Base, Entity, AssetType
+from model import Base, Entity, AssetType, Asset
 import functools, pdb
 
 #use jinja2 template
@@ -23,7 +23,11 @@ def server_static(filename):
 @app.route('/')
 @view('index')
 def index():
-    pass
+    pdb.set_trace()
+    with open('request.environ.txt', 'w') as fo:
+        fo.write(str(request.environ))
+        #for k,v in request.environ.items():
+        #    fo.write('{} = {}\n'.format(k, v))
 
 # module assettype start
 @app.route('/addassettype')
@@ -75,13 +79,27 @@ def add_asset(db):
 
 @app.route('/asset', method='POST')
 def post_asset(db):
-    assettypename = request.forms.getunicode('assettypename')
+    assettypeid = request.forms.getunicode('assettypeid')
     asiden = request.forms.getunicode('asiden')
     asorgan = request.forms.getunicode('asorgan')
-    if assettypename == '' or asiden == '' or asorgan == '':
+    bill_dt = request.forms.getunicode('bill_dt')
+    repayment_dt = request.forms.getunicode('repayment_dt')
+    credit_limit = request.forms.getunicode('credit_limit')
+    year_rate = request.forms.getunicode('year_rate')
+    comment = request.forms.getunicode('comment')
+    print(assettypeid, asiden, asorgan)
+    if assettypeid == '' or asiden == '' or asorgan == '':
         redirect('/asset')
-    #at = AssetType(assetname=assetname, detailtype=detailtype)
-    #db.add(at)
+    asset = Asset(
+        asiden=asiden, 
+        asorgan=asorgan,
+        bill_dt=bill_dt,
+        repayment_dt=repayment_dt,
+        credit_limit=credit_limit,
+        year_rate=year_rate,
+        comment=comment
+    )
+    db.add(asset)
     redirect("/asset")
 
 @app.route('/asset')
